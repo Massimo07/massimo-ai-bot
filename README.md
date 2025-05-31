@@ -1,3 +1,2 @@
-# Massimo AI Telegram Bot
-
-Bot Telegram per automazione del network marketing con Render.com.
+# Massimo AI Bot - Versione Personalizzata
+Bot Telegram per il tuo business Live On Plus.
