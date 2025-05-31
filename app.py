@@ -1,11 +1,10 @@
+import os
 import telebot
 import openai
-import os
 from flask import Flask, request
 
-# Carica le API key dalle variabili d’ambiente
-API_TOKEN = os.environ.get('TELEGRAM_API_TOKEN')
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 openai.api_key = OPENAI_API_KEY
 
 bot = telebot.TeleBot(API_TOKEN)
@@ -21,7 +20,7 @@ def webhook():
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "👋 Ciao e benvenuto! Sono Massimo AI 🤖\nCome posso aiutarti oggi?\n\n📦 Prodotti\n📝 Registrazione\n💼 Business\nScrivi una parola chiave oppure scegli dalle opzioni!")
+    bot.reply_to(message, "Ciao! Sono Massimo AI 🤖\n\nCome posso aiutarti oggi?\nScrivimi: prodotti, registrazione o business.")
 
 @bot.message_handler(func=lambda message: True)
 def chatgpt_reply(message):
@@ -35,7 +34,7 @@ def chatgpt_reply(message):
         )
         bot.reply_to(message, risposta.choices[0].message.content)
     except Exception as e:
-        bot.reply_to(message, "⚠️ Si è verificato un errore: " + str(e))
+        bot.reply_to(message, "Si è verificato un errore nel rispondere: " + str(e))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
