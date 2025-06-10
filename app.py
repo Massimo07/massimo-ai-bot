@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 import threading
 import bot  # importa il bot da bot.py
 
@@ -12,4 +13,5 @@ if __name__ == '__main__':
     # Avvia il bot in un thread separato
     threading.Thread(target=bot.main).start()
     # Avvia il web server per soddisfare Render
-    app.run(host='0.0.0.0', port=10000)
+    port = int(os.getenv('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
