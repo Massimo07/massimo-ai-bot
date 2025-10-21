@@ -1,8 +1,12 @@
 import telebot
 import os
 
-# Usa la variabile d’ambiente definita su Render
-bot = telebot.TeleBot(os.environ['TELEGRAM_TOKEN'])
+# Istanzia il bot solo se è presente il token
+token = os.getenv('TELEGRAM_TOKEN')
+if not token:
+    raise RuntimeError('TELEGRAM_TOKEN non configurato')
+
+bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
